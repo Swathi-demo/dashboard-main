@@ -42,18 +42,16 @@ app.use("/sales", salesRoutes);
 
 // MONGOOSE SETUP
 const PORT = process.env.PORT || 9000;
-mongoose
-  .connect(process.env.MONGO_URL)
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server running on port: ${PORT}`);
-    });
-    // Product.insertMany(dataProduct)
-    // ProductStat.insertMany(dataProductStat);
-    // Transaction.insertMany(dataTransaction);
-    // OverallStat.insertMany(dataOverallStat);
-    // AffiliateStat.insertMany(dataAffiliateStat);
-  })
-  .catch((error) => {
-    console.log(error.message);
-  });
+mongoose.connect(process.env.MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => {
+  console.log("MongoDB connected successfully.");
+})
+.catch((error) => {
+  console.error("MongoDB connection failed:", error);
+});
+app.listen(PORT, () => {
+  console.log(`Server running on port: ${PORT}`);
+});
